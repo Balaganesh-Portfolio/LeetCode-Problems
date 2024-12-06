@@ -4,14 +4,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 using namespace std;
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
+bool isPalindrome(string s);
 
 int main()
 {
 	//MergeSort Problem
-	vector<int> nums1 = { 1, 2, 3, 0, 0, 0 };
+	/*vector<int> nums1 = { 1, 2, 3, 0, 0, 0 };
 	vector<int> nums2 = { 2, 5, 6 };
 	int m = 3;
 	int n = 3;
@@ -20,6 +22,18 @@ int main()
 	for (size_t i = 0; i < nums1.size(); i++)
 	{
 		cout << nums1[i] << " ";
+	}*/
+
+	//Palindrome Problem
+	string s = "race a car";
+
+	if (isPalindrome(s))  //if true
+	{
+		cout << "Is a Palindrome" << endl;
+	}
+	else
+	{
+		cout << "Is not a Palindrome" << endl;
 	}
 }
 
@@ -50,4 +64,35 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
 		v2--;
 		result--;
 	}
+}
+
+bool isPalindrome(string s) {
+
+	string result;
+	for (char c : s)
+	{
+		if (isalnum(c))                    // Keep only alphanumeric characters
+		{
+			result += tolower(c);		   // Convert to lowercase
+		}
+	}
+
+	if (result.empty())	//if string is empty return true	
+	{
+		return true;
+	}
+
+	int len = result.size();
+
+	int splitIndex = len / 2;
+
+	// Compare characters from the start and end
+	for (int i = 0; i < splitIndex; i++) 
+	{
+		if (result[i] != result[len - i - 1]) 
+		{
+			return false;  // Return false if characters don't match
+		}
+	}
+	return true;
 }
