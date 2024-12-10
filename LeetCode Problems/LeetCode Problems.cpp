@@ -9,6 +9,8 @@ using namespace std;
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
 bool isPalindrome(string s);
+bool canConstruct(string ransomNote, string magazine);
+vector<string> summaryRanges(vector<int>& nums);
 
 int main()
 {
@@ -25,16 +27,30 @@ int main()
 	}*/
 
 	//Palindrome Problem
-	string s = "race a car";
+	//string s = "race a car";
 
-	if (isPalindrome(s))  //if true
+	//if (isPalindrome(s))  //if true
+	//{
+	//	cout << "Is a Palindrome" << endl;
+	//}
+	//else
+	//{
+	//	cout << "Is not a Palindrome" << endl;
+	//}
+
+
+	//Ransom Note
+	/*string ransomNote = "aa";
+	string magazine = "aab";
+
+	if (canConstruct(ransomNote, magazine))	
 	{
-		cout << "Is a Palindrome" << endl;
+		cout << "true" << endl;
 	}
 	else
 	{
-		cout << "Is not a Palindrome" << endl;
-	}
+		cout << "false" << endl;
+	}*/
 }
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
@@ -66,8 +82,8 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
 	}
 }
 
-bool isPalindrome(string s) {
-
+bool isPalindrome(string s)
+{
 	string result;
 	for (char c : s)
 	{
@@ -96,3 +112,35 @@ bool isPalindrome(string s) {
 	}
 	return true;
 }
+
+bool canConstruct(string ransomNote, string magazine) 
+{
+	for (size_t i = 0; i < ransomNote.size(); i++)	
+	{
+		bool found = false;
+
+		for (size_t j = 0; j < magazine.size(); j++)	
+		{
+			if (ransomNote[i] == magazine[j])	
+			{
+				magazine[j] = ' '; // Mark the character as used
+				found = true;
+				break;
+			}
+		}
+
+		if (found ==  false)	
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+//vector<string> summaryRanges(vector<int>& nums) 
+//{
+//	for (size_t i = 0; i < nums.size(); i++)	
+//	{
+//
+//	}
+//}
