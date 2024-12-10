@@ -43,7 +43,7 @@ int main()
 	/*string ransomNote = "aa";
 	string magazine = "aab";
 
-	if (canConstruct(ransomNote, magazine))	
+	if (canConstruct(ransomNote, magazine))
 	{
 		cout << "true" << endl;
 	}
@@ -51,6 +51,25 @@ int main()
 	{
 		cout << "false" << endl;
 	}*/
+
+	//Summary Ranges
+	//vector<int> nums = { 0, 1, 2, 4, 5, 7 };
+
+	//// Save the result
+	//vector<string> ranges = summaryRanges(nums);
+
+	//// Print the result
+	//cout << "Ranges: ";
+	//for (size_t i = 0; i < ranges.size(); i++)
+	//{
+	//	cout << ranges[i];
+	//	if (i < ranges.size() - 1) // Add space between ranges
+	//		cout << " ";
+	//}
+	//cout << endl;
+
+	//return 0;
+
 }
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
@@ -103,9 +122,9 @@ bool isPalindrome(string s)
 	int splitIndex = len / 2;
 
 	// Compare characters from the start and end
-	for (int i = 0; i < splitIndex; i++) 
+	for (int i = 0; i < splitIndex; i++)
 	{
-		if (result[i] != result[len - i - 1]) 
+		if (result[i] != result[len - i - 1])
 		{
 			return false;  // Return false if characters don't match
 		}
@@ -113,15 +132,15 @@ bool isPalindrome(string s)
 	return true;
 }
 
-bool canConstruct(string ransomNote, string magazine) 
+bool canConstruct(string ransomNote, string magazine)
 {
-	for (size_t i = 0; i < ransomNote.size(); i++)	
+	for (size_t i = 0; i < ransomNote.size(); i++)
 	{
 		bool found = false;
 
-		for (size_t j = 0; j < magazine.size(); j++)	
+		for (size_t j = 0; j < magazine.size(); j++)
 		{
-			if (ransomNote[i] == magazine[j])	
+			if (ransomNote[i] == magazine[j])
 			{
 				magazine[j] = ' '; // Mark the character as used
 				found = true;
@@ -129,7 +148,7 @@ bool canConstruct(string ransomNote, string magazine)
 			}
 		}
 
-		if (found ==  false)	
+		if (found == false)
 		{
 			return false;
 		}
@@ -137,10 +156,38 @@ bool canConstruct(string ransomNote, string magazine)
 	return true;
 }
 
-//vector<string> summaryRanges(vector<int>& nums) 
-//{
-//	for (size_t i = 0; i < nums.size(); i++)	
-//	{
-//
-//	}
-//}
+vector<string> summaryRanges(vector<int>& nums)
+{
+	vector<string> result; // To store the ranges
+
+	//handle empty case
+	if (nums.empty())
+	{
+		return result;
+	}
+
+	int start = nums[0];  // Start value of the current range
+
+	for (size_t i = 0; i < nums.size(); i++)
+	{
+		if (i == nums.size() - 1 || nums[i] + 1 != nums[i + 1])
+		{
+			if (start == nums[i])
+			{
+				result.push_back(to_string(start)); //if single number range we add it to vector
+			}
+			else //if multiple number range
+			{
+				result.push_back(to_string(start) + "->" + to_string(nums[i]));
+			}
+
+			// Update start to the next number (if there is one)
+			if (i < nums.size() - 1)
+			{
+				start = nums[i + 1];
+			}
+
+		}
+	}
+	return result;
+}
