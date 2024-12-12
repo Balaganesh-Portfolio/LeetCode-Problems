@@ -5,12 +5,25 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <list>
+#include <stack>
+#include <unordered_map>
 using namespace std;
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
 bool isPalindrome(string s);
 bool canConstruct(string ransomNote, string magazine);
 vector<string> summaryRanges(vector<int>& nums);
+bool isValid(string s);
+bool hasCycle(ListNode* head);	
+
+struct ListNode 
+{
+	int val;
+	ListNode* next;
+	ListNode(int x) : val(x), next(NULL) {}
+	
+};
 
 int main()
 {
@@ -170,7 +183,7 @@ vector<string> summaryRanges(vector<int>& nums)
 
 	for (size_t i = 0; i < nums.size(); i++)
 	{
-		if (i == nums.size() - 1 || nums[i] + 1 != nums[i + 1])
+		if (i == nums.size() - 1 || nums[i] + 1 != nums[i + 1])	
 		{
 			if (start == nums[i])
 			{
@@ -190,4 +203,47 @@ vector<string> summaryRanges(vector<int>& nums)
 		}
 	}
 	return result;
+}
+
+bool isValid(string s) 
+{
+	stack<char> bracketStack;
+	unordered_map<char, char> matchingBrackets = { {')', '('}, {'}', '{'}, {']', '['} };  //push all values in
+
+	for (char c : s) {
+		if (matchingBrackets.count(c)) {  //if theres a closing bracket
+			if (!bracketStack.empty() && bracketStack.top() == matchingBrackets[c]) {	//if it matches, remove them
+				bracketStack.pop();	
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			bracketStack.push(c);	//If the character is an opening bracket, push it onto the stack.
+		}
+	}
+	return bracketStack.empty();		
+}
+
+bool hasCycle(ListNode* head) 
+{
+	if (head == nullptr || head->next == nullptr)	// Empty list or single node
+	{
+		return false;
+	}
+
+	ListNode* slow = head; // Slow pointer
+	ListNode* fast = head->next; // Fast pointer
+
+	while (fast != nullptr && fast->next != nullptr)
+	{
+		if (slow == fast)	
+		{
+			return true; // Cycle detected
+		}
+		slow = slow->next;  // Move slow pointer one step
+		fast = (fast->next)->next;   // Move fast pointer two steps
+	}
+	return false;  //no cycle
 }
