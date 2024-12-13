@@ -16,12 +16,23 @@ bool canConstruct(string ransomNote, string magazine);
 vector<string> summaryRanges(vector<int>& nums);
 bool isValid(string s);
 bool hasCycle(ListNode* head);	
+int maxDepth(TreeNode* root);
 
 struct ListNode 
 {
 	int val;
 	ListNode* next;
 	ListNode(int x) : val(x), next(NULL) {}
+	
+};
+
+struct TreeNode {
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode() : val(0), left(nullptr), right(nullptr) {}
+	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 	
 };
 
@@ -246,4 +257,28 @@ bool hasCycle(ListNode* head)
 		fast = (fast->next)->next;   // Move fast pointer two steps
 	}
 	return false;  //no cycle
+}
+
+int maxDepth(TreeNode* root)
+{
+	if (root == nullptr)	
+	{
+		return 0;
+	}
+
+	int leftNode = maxDepth(root->left);
+	int rightNode = maxDepth(root->right);
+
+	/*if (leftNode > rightNode)
+	{
+		leftNode += 1;
+		return leftNode;	
+	}
+	else
+	{
+		rightNode += 1;
+		return rightNode;
+	}*/
+
+	return 1 + std::max(leftNode, rightNode);	
 }
