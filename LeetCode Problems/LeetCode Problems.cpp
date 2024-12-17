@@ -8,6 +8,7 @@
 #include <list>
 #include <stack>
 #include <unordered_map>
+#include <queue>
 using namespace std;
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n);
@@ -17,6 +18,7 @@ vector<string> summaryRanges(vector<int>& nums);
 bool isValid(string s);
 bool hasCycle(ListNode* head);	
 int maxDepth(TreeNode* root);
+vector<double> averageOfLevels(TreeNode* root);
 
 struct ListNode 
 {
@@ -269,16 +271,36 @@ int maxDepth(TreeNode* root)
 	int leftNode = maxDepth(root->left);
 	int rightNode = maxDepth(root->right);
 
-	/*if (leftNode > rightNode)
-	{
-		leftNode += 1;
-		return leftNode;	
-	}
-	else
-	{
-		rightNode += 1;
-		return rightNode;
-	}*/
-
 	return 1 + std::max(leftNode, rightNode);	
+}
+
+vector<double> averageOfLevels(TreeNode* root) 
+{
+	vector<double> result;
+	queue<TreeNode*> q;
+	q.push(root);
+
+	while (!q.empty())	
+	{
+		int levelSize = q.size();
+		double sum = 0;
+
+		for (size_t i = 0; i < levelSize; i++)	
+		{
+			TreeNode* node = q.front();
+			sum += node->val;
+			q.pop();
+
+			if (node->left)
+			{
+				q.push(node->left);
+			}
+			if (node->right)	
+			{
+				q.push(node->right);
+			}
+		}
+		result.push_back(sum / levelSize);
+	}
+	return result;
 }
